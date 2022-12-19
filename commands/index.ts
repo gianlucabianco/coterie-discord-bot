@@ -38,6 +38,13 @@ export const commands: CoterieCommand[] = [
   },
 ];
 
-export const handleCommands = (validCommands: Record<string, any>[]) => {
-  validCommands.forEach((command) => command.action());
+export const handleCommands = (commands: Record<string, any>[]) => {
+  const drive = commands.find((command) => command.name === "drive");
+  const secondaryCommands = commands.filter(
+    (command) => command.name !== "drive"
+  );
+
+  secondaryCommands.forEach((command) => command.action());
+
+  drive?.action();
 };
