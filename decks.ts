@@ -170,4 +170,43 @@ export const decks: Deck[] = [
     name: "",
     archetypes: [],
   },
+  {
+    id: "forbidden_test_1",
+    vdbURL: "",
+    name: "",
+    archetypes: [],
+  },
+  {
+    id: "forbidden_test_2",
+    vdbURL: "",
+    name: "",
+    archetypes: [],
+  },
+  {
+    id: "forbidden_test_3",
+    vdbURL: "",
+    name: "",
+    archetypes: [],
+  },
+];
+
+export const forbiddenDecks = [
+  {
+    id: "forbidden_test_1",
+    vdbURL: "",
+    name: "",
+    archetypes: [],
+  },
+  {
+    id: "forbidden_test_2",
+    vdbURL: "",
+    name: "",
+    archetypes: [],
+  },
+  {
+    id: "forbidden_test_3",
+    vdbURL: "",
+    name: "",
+    archetypes: [],
+  },
 ];
