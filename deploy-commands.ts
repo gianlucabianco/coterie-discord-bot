@@ -3,15 +3,16 @@ const fs = require("node:fs");
 
 require("dotenv").config();
 
-const commands = [];
+const commands: string[] = [];
 
-const commandFiles = fs
+const commandFiles: string[] = fs
   .readdirSync("./commands")
-  .filter((file) => file.endsWith(".ts"));
+  .filter((file: string) => file.endsWith(".ts"));
 
 commandFiles.forEach((file) => {
-  const command = require(`./commands/${file}`)?.data?.toJSON();
-  // @ts-ignore
+  const command: string | undefined =
+    require(`./commands/${file}`)?.data?.toJSON();
+
   command && commands.push(command);
 });
 
