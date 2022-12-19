@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "deploy": "npx ts-node deploy-commands.ts",
     "bot": "npx ts-node bot.ts"
   },
   "dependencies": {
