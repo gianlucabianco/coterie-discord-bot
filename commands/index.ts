@@ -19,7 +19,7 @@ type CoterieCommand = {
   action: (args?: Record<string, any>) => void;
 };
 
-const commands: CoterieCommand[] = [
+export const commands: CoterieCommand[] = [
   {
     name: "drive",
     action: () => drive(),
@@ -38,4 +38,6 @@ const commands: CoterieCommand[] = [
   },
 ];
 
-export default commands;
+export const handleCommands = (validCommands: Record<string, any>[]) => {
+  validCommands.forEach((command) => command.action());
+};
