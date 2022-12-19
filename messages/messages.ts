@@ -1,5 +1,5 @@
 import { separator, prefix } from "./../commands/commands.config";
-import commands from "../commands";
+import { commands, handleCommands } from "../commands";
 
 const getRawMessages = (message: Record<string, any>): string[] => {
   const prefixPurgedMessage = message.content.slice(1);
@@ -48,5 +48,5 @@ export const handleMessage = (message: Record<string, any>) => {
     );
   }
 
-  validCommands.forEach((command) => command.action());
+  handleCommands(validCommands);
 };
