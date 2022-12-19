@@ -5,7 +5,6 @@ module.exports = {
     .setName("hi")
     .setDescription("Replies with Bella!"),
   async execute(interaction) {
-    console.log({ interaction });
     try {
       await interaction.reply("Bella!");
     } catch (err) {
