@@ -1,0 +1,26 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2021
+  },
+  "rules": {
+    "no-console": "warn",
+    "no-debugger": "warn",
+    "no-undef": "warn",
+    "no-async-promise-executor": "off",
+    "vue/multi-word-component-names": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "prettier/prettier": "warn",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "ignoreRestSiblings": true
+      }
+    ]
+  }
+}
