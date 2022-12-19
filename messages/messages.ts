@@ -44,7 +44,7 @@ export const handleMessage = (message: Record<string, any>) => {
 
   if (invalidCommands.length) {
     return message.channel.send(
-      `These are not valid Coterie commands: ${invalidCommands}. Please remove invalid commands and retype valid command`
+      `These are not valid Coterie commands: ${invalidCommands}. Please remove invalid commands and type valid commands.`
     );
   }
 
