@@ -10,9 +10,9 @@ coterie.commands = new Collection();
 const commandsPath = path.join(__dirname, "commands");
 const commandFiles = fs
   .readdirSync(commandsPath)
-  .filter((file) => file.endsWith(".ts"));
+  .filter((file: string) => file.endsWith(".ts"));
 
-commandFiles.forEach((file) => {
+commandFiles.forEach((file: string) => {
   const filePath = path.join(commandsPath, file);
   const command = require(filePath);
   const couldSetCommand = !!command?.data?.name && !!command?.execute;
@@ -26,29 +26,32 @@ commandFiles.forEach((file) => {
   coterie.commands.set(command.data.name, command);
 });
 
-coterie.once(Events.ClientReady, (c) => {
+coterie.once(Events.ClientReady, (c: Record<string, any>) => {
   console.log(`Ready! Logged in as ${c.user.tag}`);
 });
 
 coterie.login(process.env.DISCORD_TOKEN);
 
-coterie.on(Events.InteractionCreate, async (interaction) => {
-  if (!interaction.isChatInputCommand()) return;
-  const command = interaction?.client?.commands?.get(interaction.commandName);
+coterie.on(
+  Events.InteractionCreate,
+  async (interaction: Record<string, any>) => {
+    if (!interaction.isChatInputCommand()) return;
+    const command = interaction?.client?.commands?.get(interaction.commandName);
 
-  if (!command) {
-    return console.error(
-      `No command matching ${interaction.commandName} was found.`
-    );
-  }
+    if (!command) {
+      return console.error(
+        `No command matching ${interaction.commandName} was found.`
+      );
+    }
 
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    console.error({ error });
-    await interaction.reply({
-      content: "There was an error while executing this command!",
-      ephemeral: true,
-    });
+    try {
+      await command.execute(interaction);
+    } catch (error) {
+      console.error({ error });
+      await interaction.reply({
+        content: "There was an error while executing this command!",
+        ephemeral: true,
+      });
+    }
   }
-});
+);
