@@ -1,22 +1,19 @@
+import type { CommonObj, CoterieCommand } from "../common.types";
+
 const drive = () => {
   console.log({ action: "drive!" });
 };
 
-const forcePlayers = (args: Record<string, any>) => {
+const forcePlayers = (args: CommonObj) => {
   console.log({ ...args });
 };
 
-const forceDecks = (args: Record<string, any>) => {
+const forceDecks = (args: CommonObj) => {
   console.log({ ...args });
 };
 
-const registerGame = (args: Record<string, any>) => {
+const registerGame = (args: CommonObj) => {
   console.log({ ...args });
-};
-
-type CoterieCommand = {
-  name: String;
-  action: (args?: Record<string, any>) => void;
 };
 
 export const commands: CoterieCommand[] = [
@@ -38,7 +35,7 @@ export const commands: CoterieCommand[] = [
   },
 ];
 
-export const handleCommands = (commands: Record<string, any>[]) => {
+export const handleCommands = (commands: CommonObj[]) => {
   const drive = commands.find((command) => command.name === "drive");
   const secondaryCommands = commands.filter(
     (command) => command.name !== "drive"
