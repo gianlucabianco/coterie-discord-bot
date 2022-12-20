@@ -1,11 +1,4 @@
-type Archetype = "wall" | "politics" | "combat" | "ally" | "bleed" | "combo";
-
-type Deck = {
-  id: string;
-  vdbURL: string;
-  name: string;
-  archetypes: Archetype[];
-};
+import type { Deck } from "./common.types";
 
 export const decks: Deck[] = [
   {
@@ -190,7 +183,7 @@ export const decks: Deck[] = [
   },
 ];
 
-export const forbiddenDecks = [
+export const forbiddenDecks: Deck[] = [
   {
     id: "forbidden_test_1",
     vdbURL: "",
