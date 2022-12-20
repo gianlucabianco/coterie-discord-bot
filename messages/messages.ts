@@ -1,7 +1,8 @@
 import { separator, prefix } from "./../commands/commands.config";
 import { commands, handleCommands } from "../commands";
+import type { CommonObj } from "../common.types";
 
-const getRawMessages = (message: Record<string, any>): string[] => {
+const getRawMessages = (message: CommonObj): string[] => {
   const prefixPurgedMessage = message.content.slice(1);
   return prefixPurgedMessage.toLowerCase().split(separator);
 };
@@ -14,7 +15,7 @@ const getValidAndInvalidCommands = (messages: string[]) =>
   messages.reduce(
     (accumulator, currMessage) => {
       const command = commands.find(
-        (cmd: Record<string, any>) => cmd.name === currMessage
+        (cmd: CommonObj) => cmd.name === currMessage
       );
 
       if (!command) {
@@ -27,12 +28,12 @@ const getValidAndInvalidCommands = (messages: string[]) =>
       return accumulator;
     },
     {
-      validCommands: [] as Record<string, any>[],
+      validCommands: [] as CommonObj[],
       invalidCommands: [] as string[],
     }
   );
 
-export const handleMessage = (message: Record<string, any>) => {
+export const handleMessage = (message: CommonObj) => {
   if (!message.content.startsWith(prefix)) return;
 
   const rawMessages = getRawMessages(message);
