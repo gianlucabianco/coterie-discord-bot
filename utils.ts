@@ -1,89 +1,55 @@
-import type { Deck, Id, Player } from "./common.types";
-import { decks, forbiddenDecks } from "./decks";
+import type { Deck, Id, Player } from "./common.types"
+import { decks, forbiddenDecks } from "./decks"
 
-export const getRandomId = () => Math.random().toString(36).slice(2);
+export const getRandomId = () => Math.random().toString(36).slice(2)
 
+export const randomizePlayersOrder = (players: string[]): string[] =>
+	players
+		.map(value => ({ value, sort: Math.random() }))
+		.sort((a, b) => a.sort - b.sort)
+		.map(({ value }) => value)
+
+const getRandomDeck = (availableDecks: Deck[]): Deck =>
+	availableDecks[Math.floor(Math.random() * availableDecks.length)]
+
+/*  
 const getRandomDeck = (availableDecks: Id[]): Id =>
   availableDecks[Math.floor(Math.random() * availableDecks.length)];
+  */
 
-const getAvailableDecks = (
-  allDecks: Id[],
-  forbiddenDecks: Id[],
-  randomDecks: Id[]
-): Id[] =>
-  allDecks.filter((id) => ![...forbiddenDecks, ...randomDecks].includes(id));
+const getAvailableDecks = (allDecks: Deck[], forbiddenDecks: Deck[], randomDecks: Deck[]): Deck[] => {
+	const unavailableDecks = [...forbiddenDecks, ...randomDecks]
+	const unavailableDecksIds = unavailableDecks.map(dck => dck.id)
+	return allDecks.filter(deck => !unavailableDecksIds.includes(deck.id))
+}
 
-const getRandomDecks = (
-  allDecks: Id[],
-  forbiddenDecks: Id[],
-  seats: number
-): Id[] => {
-  return Array(seats)
-    .fill("")
-    .reduce((randomDecks: Id[]) => {
-      const availableDecks = getAvailableDecks(
-        allDecks,
-        forbiddenDecks,
-        randomDecks
-      );
+const getRandomDecks = (allDecks: Deck[], forbiddenDecks: Deck[], seats: number): Deck[] => {
+	return Array(seats)
+		.fill("this is an available deck slot")
+		.reduce((randomDecks: Deck[]) => {
+			const availableDecks = getAvailableDecks(allDecks, forbiddenDecks, randomDecks)
 
-      randomDecks.push(getRandomDeck(availableDecks));
+			randomDecks.push(getRandomDeck(availableDecks))
 
-      return randomDecks;
-    }, []);
-};
+			return randomDecks
+		}, [])
+}
 
 export const getRandomSeating = (
-  players: string[] = ["miro", "paffo", "dani", "gas", "diego"], // FIXME: from temporary default value to actual param and controls
-  forcedDecks?: string[],
-  forcedSeatings?: string[]
+	players: string[] = ["miro", "paffo", "dani", "gas", "diego"], // TODO: from temporary default value to actual param and controls
+	forcedDecks?: Deck[],
+	forcedSeatings?: Player[]
 ) => {
-  console.log({ forcedDecks, forcedSeatings, players });
-  const decksIds = decks.map((deck) => deck.id);
-  const forbiddenDecksIds = forbiddenDecks.map((deck) => deck.id);
+	console.log({ forcedDecks, forcedSeatings, players })
 
-  const randomDecks = getRandomDecks(
-    decksIds,
-    forbiddenDecksIds,
-    players.length
-  );
+	const randomDecks = getRandomDecks(decks, forbiddenDecks, players.length)
 
-  // TODO: forcedDecks BL
-  // TODO: forcedSeating BL
-  // TODO: return statement BL performance improvement
-  return players.map((player, idx) => {
-    return {
-      player,
-      vdbUrl: decks.find((deck) => deck.id === randomDecks[idx]), //TODO: to improve performance, randomDecks should keep track of the deck complete data, to avoid a find in this map loop
-    };
-  });
-};
-
-/*
-TODO: refactor this to enriched decks
-export const getRandomSeating = (
-  players: string[] = ["miro", "paffo", "dani", "gas", "diego"], FIXME: from temporary default value to actual param and controls
-  forcedDecks?: Deck[],
-  forcedSeatings?: Player[]
-) => {
-  console.log({ forcedDecks, forcedSeatings, players });
-  const decksIds = decks.map((deck) => deck.id);
-  const forbiddenDecksIds = forbiddenDecks.map((deck) => deck.id);
-
-  const randomDecks = getRandomDecks(
-    decksIds,
-    forbiddenDecksIds,
-    players.length
-  );
-
-  // TODO: forcedDecks BL
-  // TODO: forcedSeating BL
-  // TODO: return statement BL performance improvement
-  return players.map((player, idx) => {
-    return {
-      player,
-      vdbUrl: decks.find((deck) => deck.id === randomDecks[idx]), //TODO: to improve performance, randomDecks should keep track of the deck complete data, to avoid a find in this map loop
-    };
-  });
-};
-*/
+	// TODO: forcedDecks BL
+	// TODO: forcedSeating BL
+	return randomizePlayersOrder(players).map((player, idx) => {
+		return {
+			player,
+			...randomDecks[idx],
+		}
+	})
+}
