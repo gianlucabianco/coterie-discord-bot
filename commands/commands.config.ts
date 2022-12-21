@@ -1,4 +1,4 @@
-export const prefix = "!";
-export const separator = " ";
-export const argsIdentifier = ":";
-export const argsSeparator = "-";
+export const prefix = "!"
+export const separator = " "
+export const argsIdentifier = ":"
+export const argsSeparator = "-"
