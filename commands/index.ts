@@ -1,7 +1,19 @@
 import type { CommonObj, CoterieCommand } from "../common.types"
+import { getRandomSeating } from "../utils"
 
-const drive = () => {
-	console.log({ action: "drive!" })
+const drive = (message: CommonObj) => {
+	const seatingMessage = getRandomSeating().map((seat, idx) => {
+		return `
+			Player ${idx + 1}: ${seat.player}
+			deck: ${seat.name}
+			vdbURL: ${seat.vdbURL}
+		`
+	})
+
+	message.channel.send(`
+		Ciao, questo è il seating:
+		${seatingMessage.join("\n")}
+	`)
 }
 
 const forcePlayers = (args: CommonObj) => {
@@ -19,7 +31,7 @@ const registerGame = (args: CommonObj) => {
 export const commands: CoterieCommand[] = [
 	{
 		name: "drive",
-		action: () => drive(),
+		action: message => message && drive(message),
 	},
 	{
 		name: "player", // FORCE PLAYER(S) // TODO: chose meaningful/useful names // TODO: commands could come from parsing and should be used as args and could be chainable
@@ -51,7 +63,7 @@ export const commands: CoterieCommand[] = [
 	},
 ]
 
-export const handleCommands = (commands: CommonObj[]) => {
+export const handleCommands = (commands: CommonObj[], message: CommonObj) => {
 	const drive = commands.find(command => command.name === "drive")
 	const secondaryCommands = commands.filter(command => command.name !== "drive")
 
@@ -59,5 +71,5 @@ export const handleCommands = (commands: CommonObj[]) => {
 
 	secondaryCommands.forEach(command => command.action())
 
-	drive?.action()
+	drive?.action(message)
 }
