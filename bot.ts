@@ -11,8 +11,6 @@ const coterie = new Client({
 
 coterie.once(Events.ClientReady, (client: CommonObj) => {
 	console.log(`Coterie is online! Logged in as ${client?.user?.tag}`)
-	const list = client?.guilds?.cache?.get(process.env.SERVER_ID)
-	list.members.cache.forEach((member: any) => console.log(member.user.username))
 })
 
 coterie.on("messageCreate", (message: CommonObj) => handleMessage(message))
