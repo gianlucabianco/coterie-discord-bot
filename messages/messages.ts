@@ -44,5 +44,5 @@ export const handleMessage = (message: CommonObj) => {
 		)
 	}
 
-	handleCommands(validCommands)
+	handleCommands(validCommands, message)
 }
