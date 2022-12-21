@@ -23,41 +23,41 @@ export const commands: CoterieCommand[] = [
 	},
 	{
 		name: "player", // FORCE PLAYER(S) // TODO: chose meaningful/useful names // TODO: commands could come from parsing and should be used as args and could be chainable
-		action: (args) => args && forcePlayers(args),
+		action: args => args && forcePlayers(args),
 	},
 	{
 		name: "deck", // FORCE DECK(S)
-		action: (args) => args && forceDecks(args),
+		action: args => args && forceDecks(args),
 	},
 	{
 		name: "archetype", // FORCE ARCHETYPE(S)
-		action: (args) => args && forceDecks(args),
+		action: args => args && forceDecks(args),
 	},
 	{
 		name: "seating", // FORCE SEATING(S)
-		action: (args) => args && forceDecks(args),
+		action: args => args && forceDecks(args),
 	},
 	{
 		name: "predator", // FORCE PREDATOR
-		action: (args) => args && forceDecks(args),
+		action: args => args && forceDecks(args),
 	},
 	{
 		name: "prey", // FORCE PREY
-		action: (args) => args && forceDecks(args),
+		action: args => args && forceDecks(args),
 	},
 	{
 		name: "register",
-		action: (args) => args && registerGame(args), // TODO: needs the game id, should be invoked after the main drive command
+		action: args => args && registerGame(args), // TODO: needs the game id, should be invoked after the main drive command
 	},
 ]
 
 export const handleCommands = (commands: CommonObj[]) => {
-	const drive = commands.find((command) => command.name === "drive")
-	const secondaryCommands = commands.filter((command) => command.name !== "drive")
+	const drive = commands.find(command => command.name === "drive")
+	const secondaryCommands = commands.filter(command => command.name !== "drive")
 
 	console.log({ secondaryCommands })
 
-	secondaryCommands.forEach((command) => command.action())
+	secondaryCommands.forEach(command => command.action())
 
 	drive?.action()
 }
