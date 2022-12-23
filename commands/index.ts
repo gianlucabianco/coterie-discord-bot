@@ -1,8 +1,8 @@
 import type { CommonObj, CoterieCommand } from "../common.types"
-import { getRandomSeating } from "../utils"
+import { getDefaultPlayersBySeats, getRandomSeating } from "../utils"
 
-const drive = (message: CommonObj) => {
-	const seatingMessage = getRandomSeating().map((seat, idx) => {
+const drive = ({ message, args }: CommonObj) => {
+	const seatingMessage = getRandomSeating(args).map((seat, idx) => {
 		return `
 			Player ${idx + 1}: ${seat.player}
 			deck: ${seat.name}
@@ -16,23 +16,26 @@ const drive = (message: CommonObj) => {
 	`)
 }
 
-const forcePlayers = (args: CommonObj) => {
-	console.log({ ...args })
+const setPlayers = (args: string[]) => args
+
+export const handleCommands = (commands: CommonObj[], message: CommonObj) => {
+	const players = commands.find(command => command.name === "players")?.args ?? getDefaultPlayersBySeats()
+	const drive = commands.find(command => command.name === "drive")
+
+	drive && drive.action({ message, args: players })
 }
 
-const forceDecks = (args: CommonObj) => {
-	console.log({ ...args })
-}
-
-const registerGame = (args: CommonObj) => {
-	console.log({ ...args })
-}
-
-export const commands: CoterieCommand[] = [
+export const availableCommands: CoterieCommand[] = [
 	{
 		name: "drive",
-		action: message => message && drive(message),
+		action: args => (args ? drive(args) : console.error({ driveArgs: args })),
 	},
+	{
+		name: "players",
+		action: args => (args ? setPlayers(args as string[]) : console.error({ playersArgs: args })),
+	},
+	/*
+	TODO: commands ideas
 	{
 		name: "player", // FORCE PLAYER(S) // TODO: chose meaningful/useful names // TODO: commands could come from parsing and should be used as args and could be chainable
 		action: args => args && forcePlayers(args),
@@ -61,15 +64,23 @@ export const commands: CoterieCommand[] = [
 		name: "register",
 		action: args => args && registerGame(args), // TODO: needs the game id, should be invoked after the main drive command
 	},
+	*/
 ]
 
+/*
+TODO: every command execution abstraction draft implementation 
 export const handleCommands = (commands: CommonObj[], message: CommonObj) => {
-	const drive = commands.find(command => command.name === "drive")
-	const secondaryCommands = commands.filter(command => command.name !== "drive")
+	const sortedCommands = commands
+		.reduce(
+			(sortedCommands, command) => {
+				command.name === "drive" ? sortedCommands[1].push(command) : sortedCommands[0].push(command)
+				return sortedCommands
+			},
+			[[], []]
+		)
+		.flat()
 
-	console.log({ secondaryCommands })
-
-	secondaryCommands.forEach(command => command.action())
-
-	drive?.action(message)
+	sortedCommands.forEach((command: CommonObj) => command.action({ message, args: command.args }))
 }
+
+*/
