@@ -20,7 +20,7 @@ export type Deck = {
 
 export type CoterieCommand = {
 	name: String
-	action: (args?: CommonObj) => void
+	action: (args?: CommonObj | string[]) => void
 }
 
 export type CommonObj = Record<string, any>
