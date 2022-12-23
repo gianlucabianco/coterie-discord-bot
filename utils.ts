@@ -12,10 +12,10 @@ export const randomizePlayersOrder = (players: string[]): string[] =>
 const getRandomDeck = (availableDecks: Deck[]): Deck =>
 	availableDecks[Math.floor(Math.random() * availableDecks.length)]
 
-/*  
-const getRandomDeck = (availableDecks: Id[]): Id =>
-  availableDecks[Math.floor(Math.random() * availableDecks.length)];
-  */
+export const getDefaultPlayersBySeats = (players = 5) =>
+	Array(players)
+		.fill("this is an available deck slot")
+		.map((_, idx) => `Player ${idx + 1}`)
 
 const getAvailableDecks = (allDecks: Deck[], forbiddenDecks: Deck[], randomDecks: Deck[]): Deck[] => {
 	const unavailableDecks = [...forbiddenDecks, ...randomDecks]
@@ -35,13 +35,7 @@ const getRandomDecks = (allDecks: Deck[], forbiddenDecks: Deck[], seats: number)
 		}, [])
 }
 
-export const getRandomSeating = (
-	players: string[] = ["miro", "paffo", "dani", "gas", "diego"], // TODO: from temporary default value to actual param and controls
-	forcedDecks?: Deck[],
-	forcedSeatings?: Player[]
-) => {
-	console.log({ forcedDecks, forcedSeatings, players })
-
+export const getRandomSeating = (players: string[], forcedDecks?: Deck[], forcedSeatings?: Player[]) => {
 	const randomDecks = getRandomDecks(decks, forbiddenDecks, players.length)
 
 	// TODO: forcedDecks BL
