@@ -1,27 +1,56 @@
-import { separator, prefix } from "./../commands/commands.config"
-import { commands, handleCommands } from "../commands"
+import { argsIdentifier, prefix, mainCommand } from "./../commands/commands.config"
+import { availableCommands, handleCommands } from "../commands"
 import type { CommonObj } from "../common.types"
 
-const getRawMessages = (message: CommonObj): string[] => {
-	const prefixPurgedMessage = message.content.slice(1)
-	return prefixPurgedMessage.toLowerCase().split(separator)
+const purgeWhiteSpaces = (str: string) => str.replace(/ /g, "")
+
+const getCommands = (message: CommonObj): CommonObj[] => {
+	return (message.content as string)
+		.toLowerCase()
+		.split(prefix)
+		.reduce((commands, rawCommand) => {
+			if (rawCommand) {
+				const [rawName, rawArgs] = rawCommand.split(argsIdentifier).filter(exists => exists)
+
+				const name = rawName && purgeWhiteSpaces(rawName)
+				const args = rawArgs && rawArgs.split(" ").filter(exists => exists)
+
+				const command: CommonObj = {}
+
+				name && (command["name"] = name)
+				args && (command["args"] = args)
+
+				commands.push(command)
+			}
+			return commands
+		}, [] as CommonObj[])
 }
 
-const getUniqueMessages = (messages: string[]): string[] => [...new Set(messages)]
+const getUniqueCommands = (commands: CommonObj[]): CommonObj[] => {
+	const uniqueCommandsNames: CommonObj[] = [...new Set(commands.map(command => command.name))]
 
-const getValidAndInvalidCommands = (messages: string[]) =>
-	messages.reduce(
-		(accumulator, currMessage) => {
-			const command = commands.find((cmd: CommonObj) => cmd.name === currMessage)
+	return uniqueCommandsNames.reduce((acc: CommonObj[], commandName) => {
+		const targetCommand = commands.find(commands => commands.name === commandName)
+		targetCommand && acc.push(targetCommand)
+		return acc
+	}, [])
+}
 
-			if (!command) {
-				currMessage && accumulator.invalidCommands.push(currMessage)
-				return accumulator
-			}
+const getValidAndInvalidCommands = (commands: CommonObj[]) =>
+	commands.reduce(
+		(validAndInvalidCommands, currCommand) => {
+			const availableCommand = availableCommands.find((availableCommand: CommonObj) =>
+				currCommand.name.startsWith(availableCommand.name)
+			)
 
-			accumulator.validCommands.push(command)
+			!availableCommand
+				? validAndInvalidCommands.invalidCommands.push(currCommand)
+				: validAndInvalidCommands.validCommands.push({
+						...availableCommand,
+						...currCommand,
+				  })
 
-			return accumulator
+			return validAndInvalidCommands
 		},
 		{
 			validCommands: [] as CommonObj[],
@@ -30,17 +59,19 @@ const getValidAndInvalidCommands = (messages: string[]) =>
 	)
 
 export const handleMessage = (message: CommonObj) => {
-	if (!message.content.startsWith(prefix)) return
+	if (!message.content.startsWith(mainCommand)) return
 
-	const rawMessages = getRawMessages(message)
+	const commands = getCommands(message)
 
-	const uniqueMessages = getUniqueMessages(rawMessages)
+	const uniqueCommands = getUniqueCommands(commands)
 
-	const { validCommands, invalidCommands } = getValidAndInvalidCommands(uniqueMessages)
+	const { validCommands, invalidCommands } = getValidAndInvalidCommands(uniqueCommands)
 
 	if (invalidCommands.length) {
 		return message.channel.send(
-			`These are not valid Coterie commands: ${invalidCommands}. Please remove invalid commands and type valid commands.`
+			`These are not valid Coterie commands: ${invalidCommands.map(
+				(command: CommonObj): string => command.name
+			)}. Please remove invalid commands and type valid commands.`
 		)
 	}
 
