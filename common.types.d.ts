@@ -1,6 +1,20 @@
 export type Id = string
 export type Order = 1 | 2 | 3 | 4 | 5
 
+export type Author = {
+	id: string
+	bot: boolean
+	username: string
+}
+
+export type Channel = { send: (msg: string) => void }
+
+export type Message = {
+	author: Author
+	content: string
+	channel: Channel
+}
+
 export type Player = {
 	id: Id
 	name: string
