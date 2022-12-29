@@ -16,10 +16,20 @@ const drive = ({ message, args }: CommonObj) => {
 	`)
 }
 
+// TODO: implement this
+// const showDecks = () => {}
+
+// TODO: implement this
+// const getHelp = () => {}
+
+const handleError = (e: CommonObj) => {
+	return console.error(e)
+}
+
 const setPlayers = (args: string[]) => args
 
 export const handleCommands = (commands: CommonObj[], message: CommonObj) => {
-	const players = commands.find(command => command.name === "players")?.args ?? getDefaultPlayersBySeats()
+	const players = commands.find(command => command.name === "players")?.args ?? getDefaultPlayersBySeats() // TODO: this could be a simple empty string
 	const drive = commands.find(command => command.name === "drive")
 
 	drive && drive.action({ message, args: players })
@@ -28,12 +38,20 @@ export const handleCommands = (commands: CommonObj[], message: CommonObj) => {
 export const availableCommands: CoterieCommand[] = [
 	{
 		name: "drive",
-		action: args => (args ? drive(args) : console.error({ driveArgs: args })),
+		action: args => (args ? drive(args) : handleError({ driveArgs: args })),
 	},
 	{
 		name: "players",
-		action: args => (args ? setPlayers(args as string[]) : console.error({ playersArgs: args })),
+		action: args => (args ? setPlayers(args as string[]) : handleError({ playersArgs: args })),
 	},
+	// {
+	// 	name: "help",
+	// 	action: args => (args ? getHelp(args as string[]) : handleError({ playersArgs: args })),
+	// },
+	// {
+	// 	name: "showdecks",
+	// 	action: args => (args ? showDecks(args as string[]) : handleError({ playersArgs: args })),
+	// },
 	/*
 	TODO: commands ideas
 	{
