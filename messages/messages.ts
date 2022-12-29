@@ -1,21 +1,23 @@
-import { argsIdentifier, prefix, mainCommand } from "./../commands/commands.config"
+import { argsIdentifier, prefix, mainCommand, startingCommands } from "./../commands/commands.config"
 import { availableCommands, handleCommands } from "../commands"
-import type { CommonObj } from "../common.types"
+import type { CommonObj, Message } from "../common.types"
 
 const purgeWhiteSpaces = (str: string) => str.replace(/ /g, "")
-
+// TODO: type getCommands return value => from CommonObj to CustomType
 const getCommands = (message: CommonObj): CommonObj[] => {
 	return (message.content as string)
 		.toLowerCase()
 		.split(prefix)
 		.reduce((commands, rawCommand) => {
 			if (rawCommand) {
-				const [rawName, rawArgs] = rawCommand.split(argsIdentifier).filter(exists => exists)
+				const [rawName, rawArgs] = rawCommand.split(argsIdentifier).filter(argsChain => argsChain)
 
 				const name = rawName && purgeWhiteSpaces(rawName)
-				const args = rawArgs && rawArgs.split(" ").filter(exists => exists)
+				const args = rawArgs && rawArgs.split(" ").filter(arg => arg)
 
 				const command: CommonObj = {}
+
+				if (!name) return commands
 
 				name && (command["name"] = name)
 				args && (command["args"] = args)
@@ -58,8 +60,13 @@ const getValidAndInvalidCommands = (commands: CommonObj[]) =>
 		}
 	)
 
-export const handleMessage = (message: CommonObj) => {
-	if (!message.content.startsWith(mainCommand)) return
+const checkIfStartingCommand = ({ content }: { content: string }) =>
+	startingCommands.some(startingCommand => content.startsWith(startingCommand))
+
+export const handleMessage = (message: Message) => {
+	if (message.author.bot) return
+
+	if (!checkIfStartingCommand(message)) return
 
 	const commands = getCommands(message)
 
