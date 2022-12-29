@@ -1,4 +1,4 @@
-import type { CommonObj } from "./common.types"
+import type { CommonObj, Message } from "./common.types"
 import { handleMessage } from "./messages/messages"
 
 const { Client, Events, GatewayIntentBits } = require("discord.js")
@@ -13,6 +13,6 @@ coterie.once(Events.ClientReady, (client: CommonObj) => {
 	console.log(`Coterie is online! Logged in as ${client?.user?.tag}`)
 })
 
-coterie.on("messageCreate", (message: CommonObj) => handleMessage(message))
+coterie.on("messageCreate", (message: Message) => handleMessage(message))
 
 coterie.login(process.env.DISCORD_TOKEN)
