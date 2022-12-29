@@ -3,11 +3,17 @@ import { decks, forbiddenDecks } from "./decks"
 
 export const getRandomId = () => Math.random().toString(36).slice(2)
 
+export const getRandomOrder = (players: string[]) => {
+	const randomOrder: number[] = []
+	while (randomOrder.length < players.length) {
+		const rand = Math.floor(Math.random() * players.length)
+		!randomOrder.includes(rand) && randomOrder.push(rand)
+	}
+	return randomOrder
+}
+
 export const randomizePlayersOrder = (players: string[]): string[] =>
-	players
-		.map(value => ({ value, sort: Math.random() }))
-		.sort((a, b) => a.sort - b.sort)
-		.map(({ value }) => value)
+	getRandomOrder(players).map(order => players[order])
 
 const getRandomDeck = (availableDecks: Deck[]): Deck =>
 	availableDecks[Math.floor(Math.random() * availableDecks.length)]
@@ -17,10 +23,14 @@ export const getDefaultPlayersBySeats = (players = 5) =>
 		.fill("this is an available deck slot")
 		.map((_, idx) => `Player ${idx + 1}`)
 
-const getAvailableDecks = (allDecks: Deck[], forbiddenDecks: Deck[], randomDecks: Deck[]): Deck[] => {
-	const unavailableDecks = [...forbiddenDecks, ...randomDecks]
-	const unavailableDecksIds = unavailableDecks.map(dck => dck.id)
-	return allDecks.filter(deck => !unavailableDecksIds.includes(deck.id))
+const getAvailableDecks = (allDecks: Deck[], forbiddenDecks: Deck[], preselectedDecks: Deck[]): Deck[] => {
+	const unavailableDecks = [...forbiddenDecks, ...preselectedDecks]
+
+	return allDecks.reduce((decks, deck) => {
+		const bannedDeckIndex = unavailableDecks.findIndex(dck => dck.id === deck.id)
+		bannedDeckIndex === -1 ? decks.push(deck) : unavailableDecks.splice(bannedDeckIndex, 1)
+		return decks
+	}, [] as Deck[])
 }
 
 const getRandomDecks = (allDecks: Deck[], forbiddenDecks: Deck[], seats: number): Deck[] => {
