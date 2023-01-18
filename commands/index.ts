@@ -1,6 +1,12 @@
 import type { CommonObj, CoterieCommand } from "../common.types"
 import { getDefaultPlayersBySeats, getRandomSeating } from "../utils"
 
+import {
+	// ActionRowBuilder,
+	ModalBuilder,
+	// TextInputBuilder,
+} from "@discordjs/builders"
+
 const getSeatingMessage = (args: string[]) =>
 	getRandomSeating(args).map((seat, idx) => {
 		return `
@@ -22,6 +28,12 @@ const replyWithPM = ({ message, args }: CommonObj) =>
 		${getSeatingMessage(args).join("\n")}
 	`)
 
+const replyWithModal = ({ message, args }: CommonObj) => {
+	const modal = new ModalBuilder().setCustomId("myModal").setTitle("My Modal")
+
+	message.showModal() // FIXME: this do not will work
+}
+
 // TODO: implement this
 // const decklists = () => {}
 
@@ -40,6 +52,10 @@ export const handleCommands = (commands: CommonObj[], message: CommonObj) => {
 
 	const pm = commands.find(command => command.name === "pm")
 
+	const modal = commands.find(command => command.name === "modal")
+
+	modal && modal.action({ message, args: players })
+
 	pm && pm.action({ message, args: players })
 
 	!pm && drive && drive.action({ message, args: players })
@@ -57,6 +73,10 @@ export const availableCommands: CoterieCommand[] = [
 	{
 		name: "pm",
 		action: args => replyWithPM(args as string[]),
+	},
+	{
+		name: "modal",
+		action: args => replyWithModal(args as string[]),
 	},
 	// {
 	// 	name: "help",
