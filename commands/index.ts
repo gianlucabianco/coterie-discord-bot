@@ -23,7 +23,7 @@ const replyWithPM = ({ message, args }: CommonObj) =>
 	`)
 
 // TODO: implement this
-// const showDecks = () => {}
+// const decklists = () => {}
 
 // TODO: implement this
 // const getHelp = () => {}
@@ -63,8 +63,8 @@ export const availableCommands: CoterieCommand[] = [
 	// 	action: args => (args ? getHelp(args as string[]) : handleError({ playersArgs: args })),
 	// },
 	// {
-	// 	name: "showdecks",
-	// 	action: args => (args ? showDecks(args as string[]) : handleError({ playersArgs: args })),
+	// 	name: "decklists",
+	// 	action: args => (args ? decklists(args as string[]) : handleError({ playersArgs: args })),
 	// },
 	/*
 	TODO: commands ideas
