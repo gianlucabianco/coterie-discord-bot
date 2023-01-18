@@ -4,7 +4,7 @@ export const separator = " "
 export const argsIdentifier = ":"
 export const argsSeparator = "-"
 
-export const startingCommands = ["!help", "!showdecks", "!drive", "!pm"]
+export const startingCommands = ["!help", "!decklists", "!drive", "!pm"]
 
 /*
 QUERY EXAMPLE:
