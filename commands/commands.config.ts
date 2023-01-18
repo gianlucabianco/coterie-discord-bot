@@ -4,6 +4,9 @@ export const separator = " "
 export const argsIdentifier = ":"
 export const argsSeparator = "-"
 
+/*
+TODO: !modal is a temp command, for test purpose only
+*/
 export const startingCommands = ["!help", "!decklists", "!drive", "!pm", "!modal"]
 
 /*
