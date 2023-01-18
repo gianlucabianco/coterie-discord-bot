@@ -1,20 +1,26 @@
 import type { CommonObj, CoterieCommand } from "../common.types"
 import { getDefaultPlayersBySeats, getRandomSeating } from "../utils"
 
-const drive = ({ message, args }: CommonObj) => {
-	const seatingMessage = getRandomSeating(args).map((seat, idx) => {
+const getSeatingMessage = (args: string[]) =>
+	getRandomSeating(args).map((seat, idx) => {
 		return `
-			Player ${idx + 1}: ${seat.player}
-			deck: ${seat.name}
-			vdbURL: ${seat.vdbURL}
-		`
+		Player ${idx + 1}: ${seat.player}
+		deck: ${seat.name}
+		vdbURL: ${seat.vdbURL}
+	`
 	})
 
+const drive = ({ message, args }: CommonObj) =>
 	message.channel.send(`
 		Ciao, questo è il seating:
-		${seatingMessage.join("\n")}
+		${getSeatingMessage(args).join("\n")}
 	`)
-}
+
+const replyWithPM = ({ message, args }: CommonObj) =>
+	message.author.send(`
+		Ciao, questo è il seating:
+		${getSeatingMessage(args).join("\n")}
+	`)
 
 // TODO: implement this
 // const showDecks = () => {}
@@ -32,7 +38,11 @@ export const handleCommands = (commands: CommonObj[], message: CommonObj) => {
 	const players = commands.find(command => command.name === "players")?.args ?? getDefaultPlayersBySeats() // TODO: this could be a simple empty string
 	const drive = commands.find(command => command.name === "drive")
 
-	drive && drive.action({ message, args: players })
+	const pm = commands.find(command => command.name === "pm")
+
+	pm && pm.action({ message, args: players })
+
+	!pm && drive && drive.action({ message, args: players })
 }
 
 export const availableCommands: CoterieCommand[] = [
@@ -43,6 +53,10 @@ export const availableCommands: CoterieCommand[] = [
 	{
 		name: "players",
 		action: args => (args ? setPlayers(args as string[]) : handleError({ playersArgs: args })),
+	},
+	{
+		name: "pm",
+		action: args => replyWithPM(args as string[]),
 	},
 	// {
 	// 	name: "help",
