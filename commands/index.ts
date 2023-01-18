@@ -27,7 +27,13 @@ const replyWithPM = ({ message, args }: CommonObj) =>
 		Ciao, questo è il seating:
 		${getSeatingMessage(args).join("\n")}
 	`)
-
+/*
+TODO: replyWithModal should work on interaction (@coterie, i assume)
+Dig on how to use this API.
+please see:
+https://www.youtube.com/watch?v=Z5-B0DDobxk&ab_channel=AnsontheDeveloper
+https://github.com/stuyy/discord.js-v14-report-user-command/blob/master/src/index.js
+*/
 const replyWithModal = ({ message, args }: CommonObj) => {
 	const modal = new ModalBuilder().setCustomId("myModal").setTitle("My Modal")
 
