@@ -13,6 +13,7 @@ export type Message = {
 	author: Author
 	content: string
 	channel: Channel
+	reply: (args: Record<string, any>) => void
 }
 
 export type Player = {
