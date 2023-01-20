@@ -1,5 +1,12 @@
 import type { Deck } from "./common.types"
-
+/*
+TODO: add missing decks => 
+- unnamed classic
+- kit aus
+- weenie dem
+- laibon picchio di otso
+- gangrel wall mio
+*/
 export const decks: Deck[] = [
 	{
 		id: "foyy4obvlh",
