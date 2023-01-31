@@ -8,6 +8,24 @@ The api includes methods to handle for form submission, it could be useful to ha
 
 CODE EXAMPLE:
 
+coterie.on("messageCreate", (message: Message) => {
+	if (message.author.bot) return
+	let button = new ActionRowBuilder()
+	button.addComponents(
+		new ButtonBuilder()
+			.setCustomId("verification-button")
+			.setStyle(ButtonStyle.Primary)
+			.setLabel("Open modal dialog")
+	)
+	message.reply({
+		components: [button as any],
+	})
+	handleInteraction(message)
+
+	handleMessage(message)
+})
+
+
 coterie.on(Events.InteractionCreate, async (interaction: any) => {
 	const modal = new ModalBuilder()
 		.setCustomId("test-modal")
