@@ -49,34 +49,50 @@ coterie.on("messageCreate", (message: Message) => {
 
 // FIXME: interaction is also write a simple message with a command
 coterie.on(Events.InteractionCreate, async (interaction: any) => {
-	if (interaction.isButton()) {
-		if (interaction.customId === "verification-button") {
-			const modal = new ModalBuilder()
-				.setCustomId("verification-modal")
-				.setTitle("Verify yourself")
-				.addComponents([
-					new ActionRowBuilder().addComponents(
-						(new TextInputBuilder() as any)
-							.setCustomId("verification-input")
-							.setLabel("Answer")
-							.setStyle(TextInputStyle.Short)
-							.setMinLength(4)
-							.setMaxLength(12)
-							.setPlaceholder("ABCDEF")
-							.setRequired(true)
-					) as any,
-				])
+	const modal = new ModalBuilder()
+		.setCustomId("test-modal")
+		.setTitle("Modal header")
+		.addComponents([
+			new ActionRowBuilder().addComponents(
+				(new TextInputBuilder() as any)
+					.setCustomId("verification-input")
+					.setLabel("Answer")
+					.setStyle(TextInputStyle.Short)
+					.setMinLength(4)
+					.setMaxLength(12)
+					.setPlaceholder("ABCDEF")
+					.setRequired(true)
+			) as any,
+		])
+	interaction?.showModal(modal)
+	// if (interaction.isButton()) {
+	// 	if (interaction.customId === "verification-button") {
+	// 		const modal = new ModalBuilder()
+	// 			.setCustomId("verification-modal")
+	// 			.setTitle("Verify yourself")
+	// 			.addComponents([
+	// 				new ActionRowBuilder().addComponents(
+	// 					(new TextInputBuilder() as any)
+	// 						.setCustomId("verification-input")
+	// 						.setLabel("Answer")
+	// 						.setStyle(TextInputStyle.Short)
+	// 						.setMinLength(4)
+	// 						.setMaxLength(12)
+	// 						.setPlaceholder("ABCDEF")
+	// 						.setRequired(true)
+	// 				) as any,
+	// 			])
 
-			await interaction.showModal(modal)
-		}
-	}
+	// 		await interaction.showModal(modal)
+	// 	}
+	// }
 
-	if (interaction.type === InteractionType.ModalSubmit) {
-		if (interaction.customId === "verification-modal") {
-			const response = interaction.fields.getTextInputValue("verification-input")
-			interaction.reply(`Yay, your answer is submitted: "${response}"`)
-		}
-	}
+	// if (interaction.type === InteractionType.ModalSubmit) {
+	// 	if (interaction.customId === "verification-modal") {
+	// 		const response = interaction.fields.getTextInputValue("verification-input")
+	// 		interaction.reply(`Yay, your answer is submitted: "${response}"`)
+	// 	}
+	// }
 })
 
 coterie.login(process.env.DISCORD_TOKEN)
