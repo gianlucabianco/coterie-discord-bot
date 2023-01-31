@@ -139,6 +139,42 @@ export const decks: Deck[] = [
 		name: "MVD23_War Ghoul 61 carte",
 		archetypes: ["ally", "combat"],
 	},
+	{
+		id: "n58fuf2QV0x",
+		vdbURL: "https://vdb.im/decks/1a251b8c8cb24feeb171b63839d00bf3",
+		name: "MVD24_the_Hoody_Gang_n2_ aka_anargh",
+		archetypes: ["wall", "combat"],
+	},
+	{
+		id: "2WwDNjpU_VL",
+		vdbURL: "https://vdb.im/decks/2858017bce25473d982291990ebf0672",
+		name: "MVD25_The_Unnamed_classic",
+		archetypes: ["bleed", "star"],
+	},
+	{
+		id: "KzlaUV-Kl81",
+		vdbURL: "https://vdb.im/decks/94ff6526c0334a928b0212e89766b088",
+		name: "MVD26_Gangrel_wall_anarch",
+		archetypes: ["wall"],
+	},
+	{
+		id: "d0Om-LZmSz5",
+		vdbURL: "https://vdb.im/decks/cfeac5eea292433db0aac4aae64264bb",
+		name: "MVD27_AUS_kit_wall",
+		archetypes: ["wall"],
+	},
+	{
+		id: "7u0pYJeSqTh",
+		vdbURL: "https://vdb.im/decks/d3ac32d265b04d9fbca692966d86e888",
+		name: "MVD28_DEM_weenie",
+		archetypes: ["bleed", "swarm"],
+	},
+	{
+		id: "7rvY8N2OP2j",
+		vdbURL: "https://vdb.im/decks/02124bb0b1394e6facb09c321af699bb",
+		name: "MVD29_OTSO_Ropecon22",
+		archetypes: ["combat"],
+	},
 
 	// {
 	// 	id: "gtexpph3us7",
