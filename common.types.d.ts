@@ -24,7 +24,7 @@ export type Player = {
 	order: Order
 }
 // TODO: generate sub archetypes: ex. "wall" | "hardwall"
-export type Archetype = "wall" | "politics" | "combat" | "ally" | "bleed" | "combo" | "swarm" | "multimaster"
+export type Archetype = "wall" | "politics" | "combat" | "ally" | "bleed" | "combo" | "swarm" | "multimaster" | "star"
 
 export type Deck = {
 	id: string
