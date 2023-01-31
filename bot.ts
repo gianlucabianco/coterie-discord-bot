@@ -16,27 +16,6 @@ coterie.once(Events.ClientReady, (client: CommonObj) => {
 	console.log(`Coterie is online! Logged in as ${client?.user?.tag}`)
 })
 
-coterie.on("messageCreate", (message: Message) => {
-	/*
-	TODO: delete the following test after commit.
-	this feat is not needed now, but could be handy in the future
-	*/
-	/* temp test start */
-	if (message.author.bot) return
-	let button = new ActionRowBuilder()
-	button.addComponents(
-		new ButtonBuilder()
-			.setCustomId("verification-button")
-			.setStyle(ButtonStyle.Primary)
-			.setLabel("Open modal dialog")
-	)
-	message.reply({
-		components: [button as any],
-	})
-	handleInteraction(message)
-	/* temp test end */
-
-	handleMessage(message)
-})
+coterie.on("messageCreate", (message: Message) => handleMessage(message))
 
 coterie.login(process.env.DISCORD_TOKEN)
