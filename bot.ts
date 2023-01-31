@@ -1,13 +1,5 @@
-import {
-	ActionRowBuilder,
-	ButtonBuilder,
-	ButtonStyle,
-	InteractionType,
-	ModalBuilder,
-	TextInputBuilder,
-	TextInputStyle,
-} from "discord.js"
-import { networkInterfaces } from "os"
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js"
+
 import type { CommonObj, Message } from "./common.types"
 import { handleInteraction } from "./interactions/interactions"
 import { handleMessage } from "./messages/messages"
