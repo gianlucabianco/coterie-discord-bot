@@ -25,12 +25,15 @@ export const decks: Deck[] = [
 		name: "MVD04_Black Jack",
 		archetypes: ["bleed", "multimaster", "star"],
 	},
-	{
-		id: "0694w52evs0a",
-		vdbURL: "https://vdb.im/decks/a5d119848d3e484ca1dff0fef2dcc5a8",
-		name: "MVD05_Weenie DEM",
-		archetypes: ["bleed", "swarm"],
-	},
+	/*
+	MVD05_Weenie DEM is disabled and updated by MVD28_DEM_weenie
+	*/
+	// {
+	// 	id: "0694w52evs0a",
+	// 	vdbURL: "https://vdb.im/decks/a5d119848d3e484ca1dff0fef2dcc5a8",
+	// 	name: "MVD05_Weenie DEM",
+	// 	archetypes: ["bleed", "swarm"],
+	// },
 	{
 		id: "wzkocp5dsx9",
 		vdbURL: "https://vdb.im/decks/ebec0b815e33401395815509b01b8bf9",
