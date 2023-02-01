@@ -17,19 +17,19 @@ export const decks: Deck[] = [
 		id: "foyy4obvlh",
 		vdbURL: "https://vdb.im/decks/daee7bf7929846a68f0fb7e533612310",
 		name: "MVD03_Khursidwall",
-		archetypes: ["wall", "combat"],
+		archetypes: ["wall", "combat", "star"],
 	},
 	{
 		id: "s9eqej2bnnj",
 		vdbURL: "https://vdb.im/decks/9421a6cf71d7482eaee6ec213c134d52",
 		name: "MVD04_Black Jack",
-		archetypes: ["bleed", "multimaster"],
+		archetypes: ["bleed", "multimaster", "star"],
 	},
 	{
 		id: "0694w52evs0a",
 		vdbURL: "https://vdb.im/decks/a5d119848d3e484ca1dff0fef2dcc5a8",
 		name: "MVD05_Weenie DEM",
-		archetypes: ["bleed"],
+		archetypes: ["bleed", "swarm"],
 	},
 	{
 		id: "wzkocp5dsx9",
@@ -53,7 +53,7 @@ export const decks: Deck[] = [
 		id: "5ksyno5xgjj",
 		vdbURL: "https://vdb.im/decks/8601cffd92a441ca934ef6fccc6a57a6",
 		name: "MVD09_Goratrix",
-		archetypes: ["wall"],
+		archetypes: ["wall", "star"],
 	},
 	{
 		id: "lt8zipipw4q",
@@ -65,7 +65,7 @@ export const decks: Deck[] = [
 		id: "2fxq7jeuker",
 		vdbURL: "https://vdb.im/decks/667c5e515a3a4e0dbf4681776f22cfdc",
 		name: "MVD11_Nanarchimalism",
-		archetypes: ["combat", "multimaster"],
+		archetypes: ["combat", "multimaster", "star"],
 	},
 	{
 		id: "yriu1qlkp1",
@@ -77,7 +77,7 @@ export const decks: Deck[] = [
 		id: "qwydwfi211e",
 		vdbURL: "https://vdb.im/decks/bba6e50380b1480bab149cb59256e5fc",
 		name: "MVD13_Nephandi",
-		archetypes: ["ally", "swarm"],
+		archetypes: ["ally", "swarm", "star"],
 	},
 	{
 		id: "hc42jmvfgzq",
@@ -107,7 +107,7 @@ export const decks: Deck[] = [
 		id: "v0fgxj0dtce",
 		vdbURL: "https://vdb.im/decks/a15f286e417c48cba27ad3a713649b82",
 		name: "MVD_18_Stani pro/dom vote and bleed",
-		archetypes: ["bleed", "politics"],
+		archetypes: ["bleed", "politics", "star"],
 	},
 	{
 		id: "2lz4u1ag3h3",
@@ -125,7 +125,7 @@ export const decks: Deck[] = [
 		id: "lsya5lu5qy",
 		vdbURL: "https://vdb.im/decks/aeb17bf479ba4332b1fe21b1fd033830",
 		name: "MVD21_Unnamed anarch platinum",
-		archetypes: ["bleed"],
+		archetypes: ["bleed", "star"],
 	},
 	{
 		id: "y03kj0ia9ke",
