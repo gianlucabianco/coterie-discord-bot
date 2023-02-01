@@ -4,10 +4,11 @@ export const separator = " "
 export const argsIdentifier = ":"
 export const argsSeparator = "-"
 
+export const startingCommands = ["!help", "!decklists", "!drive", "!helppm", "!decklistspm", "!drivepm"]
+
 /*
-TODO: !modal is a temp command, for test purpose only
+"!modal" command should be handled/implemented
 */
-export const startingCommands = ["!help", "!decklists", "!drive", "!pm", "!modal"]
 
 /*
 QUERY EXAMPLE:
