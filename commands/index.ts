@@ -18,6 +18,12 @@ const drive = ({ message, args }: CommonObj) =>
 		${getSeatingMessage(args).join("\n")}
 	`)
 
+const drivePM = ({ message, args }: CommonObj) =>
+	message.author.send(`
+		Ciao, questo è il seating:
+		${getSeatingMessage(args).join("\n")}
+	`)
+
 // TODO: this should be implemented for every "pm" command
 const replyWithPM = ({ message, args }: CommonObj) =>
 	message.author.send(`
@@ -29,7 +35,15 @@ const decklists = args => {
 	console.log({ args })
 }
 
+const decklistsPM = args => {
+	console.log({ args })
+}
+
 const getHelp = args => {
+	console.log({ args })
+}
+
+const getHelpPM = args => {
 	console.log({ args })
 }
 
@@ -38,6 +52,7 @@ const handleError = (e: CommonObj) => {
 }
 
 export const handleCommands = (commands: CommonObj[], message: CommonObj) => {
+	// TODO: add missing command BL / remove unused command BL
 	const players = commands.find(command => command.name === "players")?.args ?? getDefaultPlayersBySeats() // TODO: this could be a simple empty string
 	const drive = commands.find(command => command.name === "drive")
 
@@ -57,6 +72,10 @@ TODO: implement the following:
 const startingCommands = ["!help", "!decklists", "!drive", "!helppm", "!decklistspm", "!drivepm"]
 */
 
+/*
+TODO: maybe error handling should be placed inside every func
+*/
+
 export const availableCommands: CoterieCommand[] = [
 	{
 		name: "drive",
@@ -69,5 +88,17 @@ export const availableCommands: CoterieCommand[] = [
 	{
 		name: "decklists",
 		action: args => (args ? decklists(args) : handleError({ playersArgs: args })),
+	},
+	{
+		name: "drivepm",
+		action: args => (args ? drivePM(args) : handleError({ driveArgs: args })),
+	},
+	{
+		name: "helppm",
+		action: args => (args ? getHelpPM(args) : handleError({ playersArgs: args })),
+	},
+	{
+		name: "decklistspm",
+		action: args => (args ? decklistsPM(args) : handleError({ playersArgs: args })),
 	},
 ]
