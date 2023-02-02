@@ -52,7 +52,7 @@ const getHelpPM = ({ message, args }: CommonObj) => {
 const handleError = (e: CommonObj) => {
 	return console.error(e)
 }
-
+// TODO: pass getDefaultPlayersBySeats if "drive" | "dpm" commands only
 export const handleCommands = (commands: CommonObj[], message: CommonObj, args?: string[]) =>
 	commands.forEach(command => command?.action({ message, args: getDefaultPlayersBySeats(args?.length) }))
 
