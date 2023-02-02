@@ -53,11 +53,8 @@ const handleError = (e: CommonObj) => {
 	return console.error(e)
 }
 
-export const handleCommands = (commands: CommonObj[], message: CommonObj) => {
-	const players = getDefaultPlayersBySeats()
-
-	commands.forEach(command => command?.action({ message, args: players }))
-}
+export const handleCommands = (commands: CommonObj[], message: CommonObj, args?: string[]) =>
+	commands.forEach(command => command?.action({ message, args: getDefaultPlayersBySeats(args?.length) }))
 
 /*
 TODO: maybe error handling should be placed inside every func
