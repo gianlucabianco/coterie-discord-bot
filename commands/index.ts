@@ -18,11 +18,13 @@ const drive = ({ message, args }: CommonObj) =>
 		${getSeatingMessage(args).join("\n")}
 	`)
 
-const drivePM = ({ message, args }: CommonObj) =>
-	message.author.send(`
+const drivePM = ({ message, args }: CommonObj) => {
+	console.log({ author: message.author })
+	return message.author.send(`
 		Ciao, questo è il seating:
 		${getSeatingMessage(args).join("\n")}
 	`)
+}
 
 // TODO: this should be implemented for every "pm" command
 const replyWithPM = ({ message, args }: CommonObj) =>
@@ -31,19 +33,19 @@ const replyWithPM = ({ message, args }: CommonObj) =>
 		${getSeatingMessage(args).join("\n")}
 	`)
 
-const decklists = args => {
+const decklists = ({ message, args }: CommonObj) => {
 	console.log({ args })
 }
 
-const decklistsPM = args => {
+const decklistsPM = ({ message, args }: CommonObj) => {
 	console.log({ args })
 }
 
-const getHelp = args => {
+const getHelp = ({ message, args }: CommonObj) => {
 	console.log({ args })
 }
 
-const getHelpPM = args => {
+const getHelpPM = ({ message, args }: CommonObj) => {
 	console.log({ args })
 }
 
@@ -51,26 +53,34 @@ const handleError = (e: CommonObj) => {
 	return console.error(e)
 }
 
+// TODO: this could be implemented like this:
+// const players = commands.find(command => command.name === "players")?.args ?? getDefaultPlayersBySeats() // TODO: this could be a simple empty string
+
 export const handleCommands = (commands: CommonObj[], message: CommonObj) => {
-	// TODO: add missing command BL / remove unused command BL
-	const players = commands.find(command => command.name === "players")?.args ?? getDefaultPlayersBySeats() // TODO: this could be a simple empty string
+	const players = getDefaultPlayersBySeats()
+
+	commands.forEach(command => command?.action({ message, args: players }))
+
+	/*
 	const drive = commands.find(command => command.name === "drive")
+	const drivePM = availableCommands?.find(command => command.name === "dpm")
 
-	const pm = commands.find(command => command.name === "pm")
+	const help = commands.find(command => command.name === "help")
+	const helpPM = commands.find(command => command.name === "hpm")
 
-	const modal = commands.find(command => command.name === "modal")
+	const decklists = commands.find(command => command.name === "decklists")
+	const decklistsPM = commands.find(command => command.name === "dlpm")
 
-	modal && modal.action({ message, args: players })
+	drive?.action({ message, args: players })
+	drivePM?.action({ message, args: players })
 
-	pm && pm.action({ message, args: players })
+	help?.action({ message, args: players })
+	helpPM?.action({ message, args: players })
 
-	!pm && drive && drive.action({ message, args: players })
+	decklists?.action({ message, args: players })
+	decklistsPM?.action({ message, args: players })
+	*/
 }
-
-/*
-TODO: implement the following:
-const startingCommands = ["!help", "!decklists", "!drive", "!helppm", "!decklistspm", "!drivepm"]
-*/
 
 /*
 TODO: maybe error handling should be placed inside every func
@@ -90,15 +100,18 @@ export const availableCommands: CoterieCommand[] = [
 		action: args => (args ? decklists(args) : handleError({ playersArgs: args })),
 	},
 	{
-		name: "drivepm",
-		action: args => (args ? drivePM(args) : handleError({ driveArgs: args })),
+		name: "dpm",
+		action: args => {
+			console.log({ msg: "inside drivepm action!" })
+			return args ? drivePM(args) : handleError({ driveArgs: args })
+		},
 	},
 	{
-		name: "helppm",
+		name: "hpm",
 		action: args => (args ? getHelpPM(args) : handleError({ playersArgs: args })),
 	},
 	{
-		name: "decklistspm",
+		name: "dlpm",
 		action: args => (args ? decklistsPM(args) : handleError({ playersArgs: args })),
 	},
 ]
