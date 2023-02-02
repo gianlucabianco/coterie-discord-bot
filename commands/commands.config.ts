@@ -4,7 +4,7 @@ export const separator = " "
 export const argsIdentifier = ":"
 export const argsSeparator = "-"
 
-export const startingCommands = ["!help", "!decklists", "!drive", "!helppm", "!decklistspm", "!drivepm"]
+export const startingCommands = ["!help", "!decklists", "!drive", "!hpm", "!dlpm", "!dpm"]
 
 /*
 "!modal" command should be handled/implemented
