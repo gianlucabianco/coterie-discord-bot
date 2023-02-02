@@ -1,4 +1,4 @@
-import { argsIdentifier, prefix, mainCommand, startingCommands } from "./../commands/commands.config"
+import { argsIdentifier, prefix, startingCommands } from "./../commands/commands.config"
 import { availableCommands, handleCommands } from "../commands"
 import type { CommonObj, Message } from "../common.types"
 
@@ -63,6 +63,50 @@ const getValidAndInvalidCommands = (commands: CommonObj[]) =>
 const checkIfStartingCommand = ({ content }: { content: string }) =>
 	startingCommands.some(startingCommand => content.startsWith(startingCommand))
 
+const hasPairedCommand = (allCommands: CommonObj, [mainCommand, secondaryCommand]: string[]) =>
+	allCommands.filter((command: CommonObj) => command.name === mainCommand || command.name === secondaryCommand)
+		.length > 1
+
+const pairedCommands: Record<string, [string, string]> = {
+	drive: ["drive", "dpm"],
+	help: ["help", "hpm"],
+	decklists: ["decklists", "dlpm"],
+}
+
+const purgedCommands = (validCommands: CommonObj) => {
+	return validCommands.filter((command: CommonObj) => {
+		const targetCommands: [string, string] = pairedCommands[command.name]
+		if (!targetCommands) return command
+
+		const [main, secondary] = targetCommands
+
+		const isPaired = hasPairedCommand(validCommands, [main, secondary])
+
+		if (isPaired && command.name === main) return command
+	})
+	// validCommands.reduce((commands: CommonObj[], command: CommonObj) => {
+	// 	const hasDriveAndPm = hasPairedCommand(validCommands, ["drive", "dpm"])
+	// 	const hasHelpAndPm = hasPairedCommand(validCommands, ["help", "hpm"])
+	// 	const hasDecklistsAndPm = hasPairedCommand(validCommands, ["decklists", "dlpm"])
+
+	// 	// TODO: abstract the following (using a map?)
+	// 	const shouldPurgeDrivePm = hasDriveAndPm && command.name !== "dpm"
+	// 	const shouldPurgeHelpPm = hasHelpAndPm && command.name !== "hpm"
+	// 	const shouldPurgeDeckListsPm = hasDecklistsAndPm && command.name !== "dlpm"
+
+	// 	const shouldPurgeCommand = shouldPurgeDrivePm || shouldPurgeDeckListsPm || shouldPurgeHelpPm
+
+	// 	!shouldPurgeCommand && commands.push(command)
+	// 	return commands
+	// }, [])
+}
+
+const handlePms = (validCommands: CommonObj) => {
+	// TODO: check if there are pms corresponding to the main command.
+	// if there are both, pass to the main command the boolean pm? and strip away the single pm command
+	// TODO: bl here
+}
+
 export const handleMessage = (message: Message) => {
 	if (message.author.bot) return
 
@@ -82,7 +126,8 @@ export const handleMessage = (message: Message) => {
 		)
 	}
 
-	// TODO: handle seating message before invoking handle commands
+	// TODO: handlePms()
 
+	// const players = getDefaultPlayersBySeats(selectedPlayers)
 	handleCommands(validCommands, message)
 }
