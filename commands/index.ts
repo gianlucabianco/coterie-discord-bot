@@ -78,10 +78,7 @@ export const availableCommands: CoterieCommand[] = [
 	},
 	{
 		name: "dpm",
-		action: args => {
-			console.log({ msg: "inside drivepm action!" })
-			return args ? drivePM(args) : handleError({ driveArgs: args })
-		},
+		action: args => (args ? drivePM(args) : handleError({ driveArgs: args })),
 	},
 	{
 		name: "hpm",
