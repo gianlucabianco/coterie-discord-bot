@@ -82,5 +82,7 @@ export const handleMessage = (message: Message) => {
 		)
 	}
 
+	// TODO: handle seating message before invoking handle commands
+
 	handleCommands(validCommands, message)
 }
