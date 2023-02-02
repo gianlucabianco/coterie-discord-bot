@@ -57,26 +57,6 @@ export const handleCommands = (commands: CommonObj[], message: CommonObj) => {
 	const players = getDefaultPlayersBySeats()
 
 	commands.forEach(command => command?.action({ message, args: players }))
-
-	/*
-	const drive = commands.find(command => command.name === "drive")
-	const drivePM = availableCommands?.find(command => command.name === "dpm")
-
-	const help = commands.find(command => command.name === "help")
-	const helpPM = commands.find(command => command.name === "hpm")
-
-	const decklists = commands.find(command => command.name === "decklists")
-	const decklistsPM = commands.find(command => command.name === "dlpm")
-
-	drive?.action({ message, args: players })
-	drivePM?.action({ message, args: players })
-
-	help?.action({ message, args: players })
-	helpPM?.action({ message, args: players })
-
-	decklists?.action({ message, args: players })
-	decklistsPM?.action({ message, args: players })
-	*/
 }
 
 /*
