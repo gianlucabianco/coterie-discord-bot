@@ -53,9 +53,6 @@ const handleError = (e: CommonObj) => {
 	return console.error(e)
 }
 
-// TODO: this could be implemented like this:
-// const players = commands.find(command => command.name === "players")?.args ?? getDefaultPlayersBySeats() // TODO: this could be a simple empty string
-
 export const handleCommands = (commands: CommonObj[], message: CommonObj) => {
 	const players = getDefaultPlayersBySeats()
 
