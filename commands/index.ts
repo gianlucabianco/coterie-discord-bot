@@ -1,4 +1,4 @@
-import type { CommonObj, CoterieCommand } from "../common.types"
+import type { CommonObj, CoterieCommand, Archetype } from "../common.types"
 import { decks } from "../decks"
 import { getDefaultPlayersBySeats, getRandomSeating } from "../utils"
 
@@ -34,20 +34,36 @@ const replyWithPM = ({ message, args }: CommonObj) =>
 		${getSeatingMessage(args).join("\n")}
 	`)
 
+const archetypes: Archetype[] = ["wall", "politics", "combat", "ally", "bleed", "combo", "swarm", "multimaster", "star"]
+
+const getDecklistsByArchetype = (): CommonObj[][] => {
+	const decksByArchetype = archetypes.map((type: Archetype) =>
+		decks.reduce((acc, curr) => {
+			curr.archetypes.includes(type) && acc.push(curr)
+			return acc
+		}, [] as CommonObj[])
+	)
+
+	return decksByArchetype
+}
+
 const decklists = ({ message, args }: CommonObj) => {
-	console.log({ TODO: "this should be splitted, or should be printed by archetypes" })
-	message.author.send(`
-		Ciao, queste sono tutte le liste disponibili:
-		${decks
-			.map(({ name, vdbURL, archetypes }) => {
-				return `
-		Deck name: ${name}
-		vdbURL: ${vdbURL}
-		archetypes: ${archetypes}
-	`
-			})
-			.join("\n")}
-	`)
+	getDecklistsByArchetype().forEach(element => {
+		console.log({ element })
+	})
+	// console.log({ TODO: "this should be splitted, or should be printed by archetypes" })
+	// message.author.send(`
+	// 	Ciao, queste sono tutte le liste disponibili:
+	// 	${decks
+	// 		.map(({ name, vdbURL, archetypes }) => {
+	// 			return `
+	// 	Deck name: ${name}
+	// 	vdbURL: ${vdbURL}
+	// 	archetypes: ${archetypes}
+	// `
+	// 		})
+	// 		.join("\n")}
+	// `)
 }
 
 const decklistsPM = ({ message, args }: CommonObj) => {
